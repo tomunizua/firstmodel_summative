@@ -1,0 +1,8 @@
+services:
+  - type: web
+    name: demand-prediction
+    env: python
+    plan: free
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "./start.sh"
+    repo: https://github.com/tomunizua/firstmodel_summative.git

@@ -26,7 +26,7 @@ model = joblib.load('best_model.pkl')
 
 # Define the input data model using Pydantic
 class PredictionInput(BaseModel):
-    order_date: str = Field(..., regex=r'^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$')
+    order_date: str = Field(..., pattern=r'^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$')
     hour: int = Field(..., ge=0, le=23)
     day_of_week: str
     is_holiday: bool

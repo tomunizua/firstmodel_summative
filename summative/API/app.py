@@ -8,7 +8,7 @@ import uvicorn
 # Define FastAPI app
 app = FastAPI(
     title="Demand Prediction API",
-    description="An API to predict demand using a Linear Regression model.",
+    description="An API to predict demand for food deliveries using a Decision trees model.",
     version="1.0"
 )
 
@@ -54,6 +54,14 @@ day_of_week_map = {
     'sunday': 6
 }
 
+weather_conditions_map = {
+    'sunny': 0,
+    'cloudy': 1,
+    'rainy': 2,
+    'snowy': 3
+}
+
+
 def is_weekend(day_of_week: str) -> bool:
     day_of_week_num = day_of_week_map[day_of_week.lower()]
     return day_of_week_num in [5, 6]
@@ -64,12 +72,13 @@ def predict(input_data: PredictionInput):
         input_dict = input_data.dict()
         day_of_week_num = day_of_week_map[input_dict["day_of_week"].lower()]
         weekend = is_weekend(input_dict["day_of_week"])
+        weather_conditions_num = weather_conditions_map[input_dict["weather_conditions"].lower()]
         features = [
             input_dict["hour"],
             day_of_week_num,
             int(weekend),
             int(input_dict["is_holiday"]),
-            input_dict["weather_conditions"].lower()
+            weather_conditions_num
         ]
 
         features_array = np.array(features).reshape(1, -1)

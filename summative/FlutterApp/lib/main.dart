@@ -38,8 +38,7 @@ class _PredictionPageState extends State<PredictionPage> {
   List<String> weatherConditions = ['Cloudy', 'Fog', 'Stormy', 'Sunny', 'Windy']; 
   List<String> roadTrafficDensity = ['Low', 'Medium', 'High', 'Jam']; 
   List<String> typeOfOrder = ['Drinks', 'Meal', 'Snack']; 
-  List<String> cities = ['Metropolotian', 'Semi-Urban', 'Urban']; 
-  List<int> multipleDeliveries = List<int>.generate(11, (i) => i); 
+  List<String> cities = ['Metropolotian', 'Semi-Urban', 'Urban'];
   
   String predictionResult = '';
 

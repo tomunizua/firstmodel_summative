@@ -30,11 +30,11 @@ class PredictionInput(BaseModel):
     Weatherconditions: str 
     Road_traffic_density: str 
     Type_of_order: str 
-    Festival: str = Field(..., regex="^(no|yes)$")
+    Festival: str = Field(..., pattern="^(no|yes)$")
     City: str 
     hour: int = Field(..., ge=0, le=23)
-    day_of_week: str = Field(..., regex="^(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)$")
-    order_date: int = Field(..., regex=r'^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$')
+    day_of_week: str = Field(..., pattern="^(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)$")
+    order_date: int = Field(..., pattern=r'^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$')
 
     class Config:
         schema_extra = {

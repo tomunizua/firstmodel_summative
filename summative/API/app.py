@@ -27,11 +27,11 @@ model = joblib.load('best_model.pkl')
 
 # Define the input data model using Pydantic
 class PredictionInput(BaseModel):
-    Weatherconditions: str = Field(..., regex="^(Sunny|Cloudy|Stormy|Fog|Windy)$")
-    Road_traffic_density: str = Field(..., regex="^(Low|Medium|High|Jam)$")
-    Type_of_order: str = Field(..., regex="^(Drinks|Meal|Snack)$") 
+    Weatherconditions: str = Field(..., pattern="^(Sunny|Cloudy|Stormy|Fog|Windy)$")
+    Road_traffic_density: str = Field(..., pattern="^(Low|Medium|High|Jam)$")
+    Type_of_order: str = Field(..., pattern="^(Drinks|Meal|Snack)$") 
     Festival: str = Field(..., pattern="^(no|yes)$")
-    City: str = Field(..., regex="^(Urban|Semi-Urban|Rural)$")
+    City: str = Field(..., pattern="^(Urban|Semi-Urban|Rural)$")
     hour: int = Field(..., ge=0, le=23)
     day_of_week: str = Field(..., pattern="^(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)$")
     order_date: str = Field(..., pattern='^20\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$')

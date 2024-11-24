@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class PredictionInput {
   final String weatherconditions;
   final String roadTrafficDensity;

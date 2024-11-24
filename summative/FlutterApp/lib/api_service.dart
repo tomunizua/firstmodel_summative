@@ -5,20 +5,16 @@ import 'prediction_input.dart';
 class ApiService {
   static const String _baseUrl = 'https://demand-prediction-dy30.onrender.com';
 
+  // Fetch prediction
   Future<Map<String, dynamic>> predictDemand(PredictionInput input) async {
-    final url = Uri.parse('$_baseUrl/predict');
-    print('Request URL: $url');
-
     final response = await http.post(
-      url,
+      Uri.parse('$_baseUrl/predict'),
       headers: {
         'Content-Type': 'application/json',
         'accept': 'application/json',
       },
       body: jsonEncode(input.toJson()),
     );
-
-    print('Response status: ${response.statusCode}');
 
     if (response.statusCode == 200) {
       return jsonDecode(response.body);

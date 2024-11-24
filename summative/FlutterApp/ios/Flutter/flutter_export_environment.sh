@@ -1,7 +1,7 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
 export "FLUTTER_ROOT=C:\Users\tdngo\Downloads\flutter_windows_3.24.5-stable\flutter"
-export "FLUTTER_APPLICATION_PATH=C:\Users\tdngo\OneDrive\Desktop\firstmodel_summative\summative\flutterapp"
+export "FLUTTER_APPLICATION_PATH=C:\Users\tdngo\OneDrive\Desktop\linear_regression_model\summative\FlutterApp"
 export "COCOAPODS_PARALLEL_CODE_SIGN=true"
 export "FLUTTER_TARGET=lib\main.dart"
 export "FLUTTER_BUILD_DIR=build"

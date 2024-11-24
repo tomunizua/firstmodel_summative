@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'api_service.dart'; 
+import 'prediction_input.dart';
 
 void main() {
   runApp(MyApp());
@@ -26,30 +28,61 @@ class _PredictionPageState extends State<PredictionPage> {
   final TextEditingController orderDateController = TextEditingController();
   final TextEditingController hourController = TextEditingController();
   final TextEditingController dayOfWeekController = TextEditingController();
-  final TextEditingController isHolidayController = TextEditingController();
-  String? selectedWeatherCondition;
+  final TextEditingController festivalController = TextEditingController(); 
+  
+  String? selectedWeatherCondition; 
+  String? selectedRoadTrafficDensity; 
+  String? selectedTypeOfOrder; 
+  String? selectedCity; 
+  int? selectedMultipleDeliveries;
 
-  List<String> weatherConditions = ['Sunny', 'Cloudy', 'Stormy', 'Windy', 'Fog'];
-
+  List<String> weatherConditions = ['Cloudy', 'Fog', 'Stormy', 'Sunny', 'Windy']; 
+  List<String> roadTrafficDensity = ['Low', 'Medium', 'High', 'Jam']; 
+  List<String> typeOfOrder = ['Drinks', 'Meal', 'Snack']; 
+  List<String> cities = ['Metropolotian', 'Semi-Urban', 'Urban']; 
+  List<int> multipleDeliveries = List<int>.generate(11, (i) => i); 
+  
   String predictionResult = '';
 
-  void predict() {
-    if (_formKey.currentState!.validate() && selectedWeatherCondition != null) {
-      // Simulate a prediction - replace with actual API call
-      setState(() {
-        predictionResult = 'The predicted demand is: 42 deliveries';
-      });
-    } else {
-      setState(() {
-        predictionResult = 'Error: Please enter valid values.';
-      });
-    }
-  }
-
- bool isValidDate(String input) {
-  final regex = RegExp(r'^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$');
-  return regex.hasMatch(input);
-}
+  void predict() async { 
+    if (_formKey.currentState!.validate() && 
+        selectedWeatherCondition != null && 
+        selectedRoadTrafficDensity != null && 
+        selectedTypeOfOrder != null && 
+        selectedCity != null && 
+        selectedMultipleDeliveries != null) { 
+      final input = PredictionInput( 
+        weatherconditions: selectedWeatherCondition!, 
+        roadTrafficDensity: selectedRoadTrafficDensity!, 
+        typeOfOrder: selectedTypeOfOrder!, 
+        multipleDeliveries: selectedMultipleDeliveries!, 
+        festival: festivalController.text.toLowerCase() == 'true' ? 'yes' : 'no', 
+        city: selectedCity!, 
+        hour: int.parse(hourController.text), 
+        dayOfWeek: dayOfWeekController.text, 
+        orderDate: orderDateController.text, 
+      ); 
+      
+      try { 
+        final result = await ApiService().predictDemand(input); 
+        setState(() { 
+          predictionResult = 'The predicted demand is: ${result['predicted_demand']} deliveries'; 
+        }); 
+      } catch (e) { 
+        setState(() { 
+          predictionResult = 'Error: $e'; 
+        }); 
+      } 
+    } else { 
+      setState(() { 
+        predictionResult = 'Error: Please enter valid values.'; 
+      }); 
+      } 
+    } 
+    
+  bool isValidDate(String input) { 
+    final regex = RegExp(r'^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$'); 
+    return regex.hasMatch(input); }
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +104,7 @@ class _PredictionPageState extends State<PredictionPage> {
                   style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
                 ),
               ),
-              SizedBox(height: 18),
+              SizedBox(height: 15),
               Container(
                 width: double.infinity,
                 child: Column(
@@ -96,7 +129,7 @@ class _PredictionPageState extends State<PredictionPage> {
                   ],
                 ),
               ),
-              SizedBox(height: 12),
+              // SizedBox(height: 12),
               Container(
                 width: double.infinity,
                 child: Column(
@@ -106,7 +139,7 @@ class _PredictionPageState extends State<PredictionPage> {
                     TextFormField(
                       controller: hourController,
                       decoration: InputDecoration(
-                        hintText: '24 hour format',
+                        hintText: '24 hour format e.g., 05',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12.0),
                         ),
@@ -122,7 +155,7 @@ class _PredictionPageState extends State<PredictionPage> {
                   ],
                 ),
               ),
-              SizedBox(height: 12),
+              // SizedBox(height: 12),
               Container(
                 width: double.infinity,
                 child: Column(
@@ -147,24 +180,24 @@ class _PredictionPageState extends State<PredictionPage> {
                   ],
                 ),
               ),
-              SizedBox(height: 12),
+              // SizedBox(height: 12),
               Container(
                 width: double.infinity,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Is a Holiday (true/false)', style: TextStyle(fontWeight: FontWeight.bold)),
+                    Text('Is there any festival?', style: TextStyle(fontWeight: FontWeight.bold)),
                     TextFormField(
-                      controller: isHolidayController,
+                      controller: festivalController,
                       decoration: InputDecoration(
-                        hintText: 'true or false',
+                        hintText: 'yes or no',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12.0),
                         ),
                       ),
                       validator: (value) {
-                        if (value == null || value.isEmpty || !(value.toLowerCase() == 'true' || value.toLowerCase() == 'false')) {
-                          return 'Please enter true or false';
+                        if (value == null || value.isEmpty || !(value.toLowerCase() == 'yes' || value.toLowerCase() == 'no')) {
+                          return 'Please enter yes or no';
                         }
                         return null;
                       },
@@ -172,7 +205,7 @@ class _PredictionPageState extends State<PredictionPage> {
                   ],
                 ),
               ),
-              SizedBox(height: 12),
+              // SizedBox(height: 12),
               Container(
                 width: double.infinity,
                 child: Column(
@@ -202,6 +235,65 @@ class _PredictionPageState extends State<PredictionPage> {
                   ],
                 ),
               ),
+              // SizedBox(height: 12), 
+              Container( 
+                width: double.infinity, 
+                child: Column( 
+                  crossAxisAlignment: CrossAxisAlignment.start, 
+                  children: [ 
+                    Text('Road Traffic Density', style: TextStyle(fontWeight: FontWeight.bold)), 
+                    DropdownButtonFormField<String>( 
+                      decoration: InputDecoration( 
+                        border: OutlineInputBorder( 
+                          borderRadius: BorderRadius.circular(12.0), 
+                        ), 
+                      ), 
+                      value: selectedRoadTrafficDensity, 
+                      items: roadTrafficDensity.map((String value) { 
+                        return DropdownMenuItem<String>( 
+                          value: value, 
+                          child: Text(value), 
+                        ); 
+                        }).toList(), 
+                        onChanged: (newValue) { 
+                          setState(() { 
+                            selectedRoadTrafficDensity = newValue; 
+                          }); 
+                        }, 
+                        validator: (value) => value == null ? 'Please select a road traffic density' : null, 
+                        ), 
+                      ], 
+                    ), 
+                  ),
+              Container( 
+                width: double.infinity, 
+                child: Column( 
+                  crossAxisAlignment: CrossAxisAlignment.start, 
+                  children: [ 
+                    Text('Type of Order', style: TextStyle(fontWeight: FontWeight.bold)), 
+                    DropdownButtonFormField<String>( 
+                      decoration: InputDecoration( 
+                        border: OutlineInputBorder( 
+                          borderRadius: BorderRadius.circular(12.0), 
+                        ), 
+                      ), 
+                      value: selectedTypeOfOrder, 
+                      items: typeOfOrder.map((String value) { 
+                        return DropdownMenuItem<String>( 
+                          value: value, 
+                          child: Text(value), 
+                        ); 
+                        }).toList(), 
+                        onChanged: (newValue) { 
+                          setState(() { 
+                            selectedTypeOfOrder = newValue; 
+                          }); 
+                        }, 
+                        validator: (value) => value == null ? 'Please select a road traffic density' : null, 
+                        ), 
+                      ], 
+                    ), 
+                  ),
               SizedBox(height: 20),
               Center(
                 child: ElevatedButton(
@@ -218,7 +310,7 @@ class _PredictionPageState extends State<PredictionPage> {
                   ),
                 ),
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 10),
               Text(
                 predictionResult,
                 style: TextStyle(fontSize: 18),

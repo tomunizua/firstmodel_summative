@@ -2,7 +2,7 @@
 This repository contains a FastAPI-based backend API and a Flutter mobile app for predicting demand for food delivery. The API is publicly accessible and can be tested using Swagger UI.
 
 ## Mission
-The mission of this project is to provide accurate and timely predictions of food delivery demand to improve operational efficiency for food delivery services.
+The mission of this project is to provide accurate and timely predictions of food delivery demand to improve operational efficiency for food delivery services and food businesses.
 
 ## Data Source
 The dataset used for training the demand prediction model is sourced from Kaggle. It contains various features related to food delivery orders, including weather conditions, road traffic density, type of order, festival occurrences, city, and time-related features. 

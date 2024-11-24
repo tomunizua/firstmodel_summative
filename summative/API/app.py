@@ -1,5 +1,5 @@
 from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel, Field, model_validator
+from pydantic import BaseModel, Field, ConfigDict, ValidationError
 from fastapi.middleware.cors import CORSMiddleware
 import joblib
 import numpy as np
@@ -50,13 +50,13 @@ class PredictionInput(BaseModel):
             }
         }
 
-    @model_validator 
+    @classmethod 
     def validate_order_date(cls, values):
         order_date = values.get('order_date')
         try: 
             datetime.datetime.strptime(order_date, '%Y-%m-%d') 
         except ValueError: 
-            raise ValueError('Order date must be in YYYY-MM-DD format') 
+            raise ValidationError('Order date must be in YYYY-MM-DD format') 
         return values
 
 # Mapping dictionaries

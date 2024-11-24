@@ -50,13 +50,14 @@ class PredictionInput(BaseModel):
             }
         }
 
-    @model_validator('order_date', pre=True) 
-    def validate_order_date(cls, v): 
+    @model_validator 
+    def validate_order_date(cls, values):
+        order_date = values.get('order_date')
         try: 
-            datetime.datetime.strptime(v, '%Y-%m-%d') 
+            datetime.datetime.strptime(order_date, '%Y-%m-%d') 
         except ValueError: 
             raise ValueError('Order date must be in YYYY-MM-DD format') 
-        return v
+        return values
 
 # Mapping dictionaries
 weather_conditions_map = {

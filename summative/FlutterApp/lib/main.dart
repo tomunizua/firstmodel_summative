@@ -71,7 +71,7 @@ class _PredictionPageState extends State<PredictionPage> {
       } 
     } else { 
       setState(() { 
-        predictionResult = 'Error: Please input valid values'; 
+        predictionResult = 'Error: Please enter valid values.'; 
       }); 
       } 
     } 

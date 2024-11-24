@@ -36,6 +36,7 @@ Connect your device or start an emulator, then run the app:
 1. Open the app on your device or emulator.
 
 2. Enter the required details for food delivery demand prediction:
+   
     -Order Date (format: YYYY-MM-DD, must start with "20")
    
     -Hour of the day (0 - 23)

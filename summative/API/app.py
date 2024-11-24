@@ -9,7 +9,7 @@ import datetime
 # Define FastAPI app
 app = FastAPI(
     title="Demand Prediction API",
-    description="An API to predict demand for food deliveries using a Decision Tree model.",
+    description="An API to predict demand for food deliveries using a Random Forest model.",
     version="1.0"
 )
 
@@ -27,15 +27,14 @@ model = joblib.load('best_model.pkl')
 
 # Define the input data model using Pydantic
 class PredictionInput(BaseModel):
-    Weatherconditions: str 
-    Road_traffic_density: str 
-    Type_of_order: str 
+    Weatherconditions: str = Field(..., regex="^(Sunny|Cloudy|Stormy|Fog|Windy)$")
+    Road_traffic_density: str = Field(..., regex="^(Low|Medium|High|Jam)$")
+    Type_of_order: str = Field(..., regex="^(Drinks|Meal|Snack)$") 
     Festival: str = Field(..., pattern="^(no|yes)$")
-    City: str 
+    City: str = Field(..., regex="^(Urban|Semi-Urban|Rural)$")
     hour: int = Field(..., ge=0, le=23)
     day_of_week: str = Field(..., pattern="^(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)$")
-    order_date: str = Field(..., pattern=r'^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$')
-
+    order_date: str = Field(..., pattern='^20\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$')
     class Config:
         schema_extra = {
             "example": {
@@ -56,7 +55,7 @@ class PredictionInput(BaseModel):
         try: 
             datetime.datetime.strptime(order_date, '%Y-%m-%d') 
             if not order_date.startswith('20'): 
-                raise ValueError('Stay in this millennium lol')
+                raise ValueError('Stay in this decade lol')
         except ValueError: 
             raise ValidationError('Date must be in YYYY-MM-DD format') 
         return values
@@ -130,7 +129,10 @@ def predict(input_data: PredictionInput):
         features_array = np.array(features).reshape(1, -1)
         prediction = model.predict(features_array)
         
-        return {"The predicted demand for food delivery is": prediction[0]}
+        # Ensure the prediction is a whole number 
+        predicted_demand = int(round(prediction[0]))
+        
+        return {"The predicted demand for food delivery is": predicted_demand}
     
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"An error occurred: {e}")

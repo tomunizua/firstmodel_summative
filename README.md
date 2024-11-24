@@ -20,8 +20,8 @@ Watch the YouTube demo video here: YouTube Video Link
 
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/YourUsername/demand-prediction-app.git
-   cd demand-prediction-app
+   git clone https://github.com/tomunizua/linear_regression_model.git
+   cd summative/FlutterApp
    
 2. **Install dependencies**
    ```bash
@@ -34,16 +34,25 @@ Connect your device or start an emulator, then run the app:
 
 ## Using the App
 1. Open the app on your device or emulator.
+
 2. Enter the required details for food delivery demand prediction:
     -Order Date (format: YYYY-MM-DD, must start with "20")
+   
     -Hour of the day (0 - 23)
+   
     -Day of the week (e.g., Monday)
+   
     -Is a Festival (yes or no)
+   
     -Weather Conditions (Sunny, Cloudy, Stormy, Fog, Windy)
+   
     -Road Traffic Density (Low, Medium, High, Jam)
+   
     -Type of Order (Meal, Drinks, Snack)
+   
     -City (Urban, Semi-Urban, Metropolitian)
+   
 3. Click the Predict button to get the demand prediction.
 
 ### Dataset
-This model was trained using this dataset from Kaggle 
+This model was trained using this() dataset from Kaggle 

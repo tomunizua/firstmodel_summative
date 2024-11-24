@@ -46,7 +46,7 @@ class PredictionInput(BaseModel):
                 "City": "Urban",
                 "hour": 14,
                 "day_of_week": "Friday",
-                "order_date": 2024-11-23
+                "order_date": "2024-11-23"
             }
         }
 

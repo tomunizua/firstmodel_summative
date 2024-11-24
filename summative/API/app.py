@@ -49,14 +49,16 @@ class PredictionInput(BaseModel):
                 "order_date": "2024-11-23"
             }
         }
-
+    
     @classmethod 
     def validate_order_date(cls, values):
         order_date = values.get('order_date')
         try: 
             datetime.datetime.strptime(order_date, '%Y-%m-%d') 
+            if not order_date.startswith('20'): 
+                raise ValueError('Stay in this millennium lol')
         except ValueError: 
-            raise ValidationError('Order date must be in YYYY-MM-DD format') 
+            raise ValidationError('Date must be in YYYY-MM-DD format') 
         return values
 
 # Mapping dictionaries
@@ -128,7 +130,7 @@ def predict(input_data: PredictionInput):
         features_array = np.array(features).reshape(1, -1)
         prediction = model.predict(features_array)
         
-        return {"predicted_demand": prediction[0]}
+        return {"The predicted demand for food delivery is": prediction[0]}
     
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"An error occurred: {e}")

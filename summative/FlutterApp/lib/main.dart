@@ -34,7 +34,6 @@ class _PredictionPageState extends State<PredictionPage> {
   String? selectedRoadTrafficDensity; 
   String? selectedTypeOfOrder; 
   String? selectedCity; 
-  int? selectedMultipleDeliveries;
 
   List<String> weatherConditions = ['Cloudy', 'Fog', 'Stormy', 'Sunny', 'Windy']; 
   List<String> roadTrafficDensity = ['Low', 'Medium', 'High', 'Jam']; 
@@ -49,13 +48,11 @@ class _PredictionPageState extends State<PredictionPage> {
         selectedWeatherCondition != null && 
         selectedRoadTrafficDensity != null && 
         selectedTypeOfOrder != null && 
-        selectedCity != null && 
-        selectedMultipleDeliveries != null) { 
+        selectedCity != null ) { 
       final input = PredictionInput( 
         weatherconditions: selectedWeatherCondition!, 
         roadTrafficDensity: selectedRoadTrafficDensity!, 
         typeOfOrder: selectedTypeOfOrder!, 
-        multipleDeliveries: selectedMultipleDeliveries!, 
         festival: festivalController.text.toLowerCase() == 'true' ? 'yes' : 'no', 
         city: selectedCity!, 
         hour: int.parse(hourController.text), 

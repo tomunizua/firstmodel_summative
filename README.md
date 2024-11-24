@@ -1,12 +1,19 @@
 ## Demand Prediction API and Mobile App
 This repository contains a FastAPI-based backend API and a Flutter mobile app for predicting demand for food delivery. The API is publicly accessible and can be tested using Swagger UI.
 
+## Mission
+The mission of this project is to provide accurate and timely predictions of food delivery demand to improve operational efficiency for food delivery services.
+
+## Data Source
+The dataset used for training the demand prediction model is sourced from Kaggle. It contains various features related to food delivery orders, including weather conditions, road traffic density, type of order, festival occurrences, city, and time-related features. 
+Find it here: https://www.kaggle.com/datasets/gauravmalik26/food-delivery-dataset?resource=download
+
 ## Publicly Available API Endpoint
 The API endpoint is deployed at: https://demand-prediction-dy30.onrender.com 
 You can test the API using the Swagger UI at: https://demand-prediction-dy30.onrender.com/docs 
 
 ## Video Demo
-Watch the YouTube demo video here: YouTube Video Link
+Watch the YouTube demo video here: https://youtube.com/shorts/bi4FzGCsaP4 
 
 ## Running the Mobile App
 

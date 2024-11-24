@@ -30,30 +30,30 @@ class _PredictionPageState extends State<PredictionPage> {
   final TextEditingController dayOfWeekController = TextEditingController();
   final TextEditingController festivalController = TextEditingController(); 
   
-  String? selectedWeatherCondition; 
-  String? selectedRoadTrafficDensity; 
-  String? selectedTypeOfOrder; 
-  String? selectedCity; 
+  String? selectedweatherCondition; 
+  String? selectedroadTrafficDensity; 
+  String? selectedtypeOfOrder; 
+  String? selectedcity; 
 
   List<String> weatherConditions = ['Cloudy', 'Fog', 'Stormy', 'Sunny', 'Windy']; 
   List<String> roadTrafficDensity = ['Low', 'Medium', 'High', 'Jam']; 
   List<String> typeOfOrder = ['Drinks', 'Meal', 'Snack']; 
-  List<String> cities = ['Metropolotian', 'Semi-Urban', 'Urban'];
+  List<String> city = ['Metropolotian', 'Semi-Urban', 'Urban'];
   
   String predictionResult = '';
 
   void predict() async { 
     if (_formKey.currentState!.validate() && 
-        selectedWeatherCondition != null && 
-        selectedRoadTrafficDensity != null && 
-        selectedTypeOfOrder != null && 
-        selectedCity != null ) { 
+        selectedweatherCondition != null && 
+        selectedroadTrafficDensity != null && 
+        selectedtypeOfOrder != null && 
+        selectedcity != null ) { 
       final input = PredictionInput( 
-        weatherconditions: selectedWeatherCondition!, 
-        roadTrafficDensity: selectedRoadTrafficDensity!, 
-        typeOfOrder: selectedTypeOfOrder!, 
+        weatherconditions: selectedweatherCondition!, 
+        roadTrafficDensity: selectedroadTrafficDensity!, 
+        typeOfOrder: selectedtypeOfOrder!, 
         festival: festivalController.text.toLowerCase() == 'true' ? 'yes' : 'no', 
-        city: selectedCity!, 
+        city: selectedcity!, 
         hour: int.parse(hourController.text), 
         dayOfWeek: dayOfWeekController.text, 
         orderDate: orderDateController.text, 
@@ -214,7 +214,7 @@ class _PredictionPageState extends State<PredictionPage> {
                           borderRadius: BorderRadius.circular(12.0),
                         ),
                       ),
-                      value: selectedWeatherCondition,
+                      value: selectedweatherCondition,
                       items: weatherConditions.map((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
@@ -223,7 +223,7 @@ class _PredictionPageState extends State<PredictionPage> {
                       }).toList(),
                       onChanged: (newValue) {
                         setState(() {
-                          selectedWeatherCondition = newValue;
+                          selectedweatherCondition = newValue;
                         });
                       },
                       validator: (value) => value == null ? 'Please select a weather condition' : null,
@@ -244,7 +244,7 @@ class _PredictionPageState extends State<PredictionPage> {
                           borderRadius: BorderRadius.circular(12.0), 
                         ), 
                       ), 
-                      value: selectedRoadTrafficDensity, 
+                      value: selectedroadTrafficDensity, 
                       items: roadTrafficDensity.map((String value) { 
                         return DropdownMenuItem<String>( 
                           value: value, 
@@ -253,7 +253,7 @@ class _PredictionPageState extends State<PredictionPage> {
                         }).toList(), 
                         onChanged: (newValue) { 
                           setState(() { 
-                            selectedRoadTrafficDensity = newValue; 
+                            selectedroadTrafficDensity = newValue; 
                           }); 
                         }, 
                         validator: (value) => value == null ? 'Please select a road traffic density' : null, 
@@ -273,7 +273,7 @@ class _PredictionPageState extends State<PredictionPage> {
                           borderRadius: BorderRadius.circular(12.0), 
                         ), 
                       ), 
-                      value: selectedTypeOfOrder, 
+                      value: selectedtypeOfOrder, 
                       items: typeOfOrder.map((String value) { 
                         return DropdownMenuItem<String>( 
                           value: value, 
@@ -282,7 +282,7 @@ class _PredictionPageState extends State<PredictionPage> {
                         }).toList(), 
                         onChanged: (newValue) { 
                           setState(() { 
-                            selectedTypeOfOrder = newValue; 
+                            selectedtypeOfOrder = newValue; 
                           }); 
                         }, 
                         validator: (value) => value == null ? 'Please select a road traffic density' : null, 

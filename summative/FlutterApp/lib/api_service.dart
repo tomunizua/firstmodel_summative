@@ -7,6 +7,8 @@ class ApiService {
 
   Future<Map<String, dynamic>> predictDemand(PredictionInput input) async {
     final url = Uri.parse('$_baseUrl/predict');
+    print('Request URL: $url');
+
     final response = await http.post(
       url,
       headers: {
@@ -15,6 +17,8 @@ class ApiService {
       },
       body: jsonEncode(input.toJson()),
     );
+
+    print('Response status: ${response.statusCode}');
 
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
